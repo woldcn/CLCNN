@@ -3,7 +3,7 @@ import torch.nn.functional as F
 import shutil
 import os
 
-def train(model, loss_function, optimizer, train_loader, val_loader, epochs, device, useCL, T):
+def train(model, loss_function, optimizer, train_loader, val_loader, epochs, device, useCL, T, log):
 	best_acc = 0
 	best_epoch = 0
 	# 迭代
@@ -51,7 +51,7 @@ def train(model, loss_function, optimizer, train_loader, val_loader, epochs, dev
 
 		val_loss /= len(val_loader.dataset)
 		val_acc = num_correct / num_examples
-		print('Epoch: {}, train_loss: {:.4f}, test_loss: {:.4f}, train_acc: {:.4f}, val_acc: {:.4f}'.format(epoch, train_loss, val_loss, train_acc, val_acc))
+		log.print('Epoch: {}, train_loss: {:.4f}, test_loss: {:.4f}, train_acc: {:.4f}, val_acc: {:.4f}'.format(epoch, train_loss, val_loss, train_acc, val_acc))
 
 		if val_acc>best_acc:
 			best_acc = val_acc
@@ -61,4 +61,5 @@ def train(model, loss_function, optimizer, train_loader, val_loader, epochs, dev
 			os.mkdir('./saved_model/CLCNN')
 			torch.save(model.state_dict(), './saved_model/CLCNN/best_epoch_' + str(epoch) + '_' + str(round(val_acc,4)) + '.pth')
 
-	print('best val_acc: {:.4f} at epoch {}'.format(best_acc, best_epoch))
+	log.print('best val_acc: {:.4f} at epoch {}'.format(best_acc, best_epoch))
+	log.save
