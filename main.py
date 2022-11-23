@@ -21,7 +21,7 @@ if __name__ == '__main__':
 	parser.add_argument('--device', default = 'cuda')
 	parser.add_argument('--batch_size', default = 10)	# 8
 	parser.add_argument('--epochs', default = 200)
-	parser.add_argument('--lr', default=0.00001)  # 0.00001:acc-95.52,epoch-36
+	parser.add_argument('--lr', default=1e-05)  # 0.00001:acc-95.52,epoch-36
 	parser.add_argument('--train_path', default = 'aug/train')
 	parser.add_argument('--test_path', default='aug/test')
 
@@ -30,7 +30,8 @@ if __name__ == '__main__':
 	parser.add_argument('--model_name', default='CLCNN')
 
 	parser.add_argument('--pretrain_model', default=models.vgg16(pretrained=True))
-	parser.add_argument('--saved_model_path', default=r'saved_model\CLCNN\best_epoch_126_0.9621.pth')
+	parser.add_argument('--saved_model_path', default=r'E:\xy\plant_disease\saved_model\CLCNN_97.24\best_epoch_193_0.9724.pth')
+	# parser.add_argument('--saved_model_path', default=r'saved_model\CLCNN\best_epoch_126_0.9621.pth')
 	# parser.add_argument('--saved_model_path', default=r'saved_model\Vgg16\best_epoch_11_0.9456.pth')
 	# parser.add_argument('--saved_model_path', default=r'saved_model\Inception_v3\best_epoch_139_0.9456.pth')
 	# parser.add_argument('--saved_model_path', default=r'saved_model\Alexnet\best_epoch_19_0.9286.pth')
@@ -73,16 +74,16 @@ if __name__ == '__main__':
 		print('{}: {}'.format(key, parameters[key]))
 	print('############################################')
 
-	# # train
-	# if args.train_or_test == 'train':
-	# 	train(model, loss_func, optimizer, train_loader, test_loader, args.epochs, args.device, args.useCL, args.T)
-	# # predict
-	# else:
-	# 	predict(model, test_loader, args.device, args.saved_model_path)
+	# train
+	if args.train_or_test == 'train':
+		train(model, loss_func, optimizer, train_loader, test_loader, args.epochs, args.device, args.useCL, args.T)
+	# predict
+	else:
+		predict(model, test_loader, args.device, args.saved_model_path)
 
 	# plt
-	train_loader, plt_loader, train_len, test_len = get_data('aug/test', args.test_path, 10)
-	plt(model, train_loader, args.saved_model_path, 'cuda')
+	# train_loader, plt_loader, train_len, test_len = get_data('aug/test', args.test_path, 10)
+	# plt(model, train_loader, args.saved_model_path, 'cuda')
 
 	print('end at: ', datetime.datetime.now())
 

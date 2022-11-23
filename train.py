@@ -20,8 +20,8 @@ def train(model, loss_function, optimizer, train_loader, val_loader, epochs, dev
 			inputs, targets = batch
 			inputs = inputs.to(device)
 			targets = targets.to(device)
-			outputs, repr, plt = model(inputs)
-			# outputs, repr = model(inputs)
+			# outputs, repr, plt = model(inputs)
+			outputs, repr = model(inputs)
 			loss = loss_function(outputs, repr, targets, useCL, T)
 			loss.backward()
 			optimizer.step()
@@ -41,8 +41,8 @@ def train(model, loss_function, optimizer, train_loader, val_loader, epochs, dev
 			inputs, targets = batch
 			inputs = inputs.to(device)
 			targets = targets.to(device)
-			outputs, repr, plt = model(inputs)
-			# outputs, repr = model(inputs)
+			# outputs, repr, plt = model(inputs)
+			outputs, repr = model(inputs)
 			loss = loss_function(outputs, repr, targets, useCL, T)
 			val_loss += loss.data.item()
 			correct = torch.eq(torch.max(F.softmax(outputs, dim = 1), dim = 1)[1], targets)
